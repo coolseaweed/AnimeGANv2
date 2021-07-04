@@ -78,7 +78,7 @@ ___
   >  `python data_mean.py --dataset Hayao`  
   
 ### 5. Train  
-  >  `python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661] --epoch 101 --init_epoch 10`  
+  >  `CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661] --epoch 101 --init_epoch 10`  
   >  For light version: `python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661]  --light --epoch 101 --init_epoch 10`  
   
 ### 6. Extract the weights of the generator  
