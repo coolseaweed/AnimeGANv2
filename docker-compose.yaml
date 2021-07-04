@@ -16,3 +16,4 @@ services:
             - ./main.py:/workspace/main.py
             - ./test.py:/workspace/test.py
             - ./AnimeGANv2.py:/workspace/AnimeGANv2.py
+            - ./logs:/workspace/logs
