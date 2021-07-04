@@ -15,4 +15,4 @@ services:
             - ./vgg19_weight:/workspace/vgg19_weight
             - ./main.py:/workspace/main.py
             - ./test.py:/workspace/test.py
-            - ./AnimeGAN.py:/workspace/AnimeGAN.py
+            - ./AnimeGANv2.py:/workspace/AnimeGANv2.py
