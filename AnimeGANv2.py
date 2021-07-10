@@ -2,6 +2,7 @@ from tools.ops import *
 from tools.utils import *
 from glob import glob
 import time
+import os
 import numpy as np
 from net import generator,generator_lite
 from net.discriminator import D_net
@@ -15,7 +16,8 @@ class AnimeGANv2(object) :
         self.checkpoint_dir = args.checkpoint_dir
         self.result_dir = args.result_dir
         self.log_dir = args.log_dir
-        self.dataset_name = args.dataset
+        self.dataset_name = os.path.basename(args.dataset)
+        self.dataset_path = args.dataset
         self.data_mean = args.data_mean
 
         self.light = args.light
@@ -60,9 +62,9 @@ class AnimeGANv2(object) :
         self.anime_gray = tf.placeholder(tf.float32, [self.batch_size, self.img_size[0], self.img_size[1], self.img_ch],name='anime_B')
 
 
-        self.real_image_generator = ImageGenerator('./dataset/train_photo', self.img_size, self.batch_size, self.data_mean)
-        self.anime_image_generator = ImageGenerator('./dataset/{}'.format(self.dataset_name + '/style'), self.img_size, self.batch_size, self.data_mean)
-        self.anime_smooth_generator = ImageGenerator('./dataset/{}'.format(self.dataset_name + '/smooth'), self.img_size, self.batch_size, self.data_mean)
+        self.real_image_generator = ImageGenerator('./dataset/picture/train_photo', self.img_size, self.batch_size, self.data_mean)
+        self.anime_image_generator = ImageGenerator('{}'.format(self.dataset_path + '/style'), self.img_size, self.batch_size, self.data_mean)
+        self.anime_smooth_generator = ImageGenerator('{}'.format(self.dataset_path + '/smooth'), self.img_size, self.batch_size, self.data_mean)
         self.dataset_num = max(self.real_image_generator.num_images, self.anime_image_generator.num_images)
 
         self.vgg = Vgg19()
@@ -207,10 +209,11 @@ class AnimeGANv2(object) :
 
         """ Input Image"""
         real_img_op, anime_img_op, anime_smooth_op  = self.real_image_generator.load_images(), self.anime_image_generator.load_images(), self.anime_smooth_generator.load_images()
-
-
+ 
         # restore check-point if it exits
         could_load, checkpoint_counter = self.load(self.checkpoint_dir)
+
+
         if could_load:
             start_epoch = checkpoint_counter + 1
 
@@ -243,9 +246,15 @@ class AnimeGANv2(object) :
                     # Init G
                     start_time = time.time()
 
-                    real_images, generator_images, _, v_loss, summary_str = self.sess.run([self.real, self.generated,
-                                                                             self.init_optim,
-                                                                             self.init_loss, self.V_loss_merge], feed_dict = train_feed_dict)
+                    real_images, generator_images, _, v_loss, summary_str = self.sess.run(
+                        [
+                            self.real, 
+                            self.generated,
+                            self.init_optim,
+                            self.init_loss, 
+                            self.V_loss_merge], 
+                        feed_dict = train_feed_dict
+                    )
                     self.writer.add_summary(summary_str, epoch)
                     init_mean_loss.append(v_loss)
 
@@ -307,21 +316,35 @@ class AnimeGANv2(object) :
     @property
     def model_dir(self):
         if self.light:
-            return "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.model_name, self.dataset_name,
-                                                   self.gan_type,
-                                                   int(self.g_adv_weight), int(self.d_adv_weight),
-                                                   int(self.con_weight), int(self.sty_weight),
-                                                   int(self.color_weight), int(self.tv_weight), 'lite')
+            return "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(
+                self.model_name, 
+                self.dataset_name,
+                self.gan_type,
+                int(self.g_adv_weight), 
+                int(self.d_adv_weight),
+                int(self.con_weight), 
+                int(self.sty_weight),
+                int(self.color_weight), 
+                int(self.tv_weight), 
+                'lite'
+                )
         else:
-            return "{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.model_name, self.dataset_name,
-                                                          self.gan_type,
-                                                          int(self.g_adv_weight), int(self.d_adv_weight),
-                                                          int(self.con_weight), int(self.sty_weight),
-                                                          int(self.color_weight), int(self.tv_weight))
+            return "{}_{}_{}_{}_{}_{}_{}_{}_{}".format(
+                self.model_name, 
+                self.dataset_name,
+                self.gan_type,
+                int(self.g_adv_weight), 
+                int(self.d_adv_weight),
+                int(self.con_weight), 
+                int(self.sty_weight),
+                int(self.color_weight), 
+                int(self.tv_weight)
+                )
 
 
     def save(self, checkpoint_dir, step):
         checkpoint_dir = os.path.join(checkpoint_dir, self.model_dir)
+
 
         if not os.path.exists(checkpoint_dir):
             os.makedirs(checkpoint_dir)
@@ -331,7 +354,6 @@ class AnimeGANv2(object) :
     def load(self, checkpoint_dir):
         print(" [*] Reading checkpoints...")
         checkpoint_dir = os.path.join(checkpoint_dir, self.model_dir)
-
         ckpt = tf.train.get_checkpoint_state(checkpoint_dir) # checkpoint file information
 
         if ckpt and ckpt.model_checkpoint_path:
@@ -346,10 +368,11 @@ class AnimeGANv2(object) :
 
     def test(self):
         tf.global_variables_initializer().run()
-        test_files = glob('./dataset/{}/*.*'.format('test/test_photo'))
+        test_files = glob('./dataset/picture/{}/*.*'.format('test/test_photo'))
 
         self.saver = tf.train.Saver()
         could_load, checkpoint_counter = self.load(self.checkpoint_dir)
+
         self.result_dir = os.path.join(self.result_dir, self.model_dir)
         check_folder(self.result_dir)
 

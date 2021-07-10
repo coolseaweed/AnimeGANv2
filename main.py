@@ -43,13 +43,13 @@ def parse_args():
     parser.add_argument('--sn', type=str2bool, default=True, help='using spectral norm')
 
 
-    parser.add_argument('--checkpoint_dir', type=str, default='checkpoint',
+    parser.add_argument('--checkpoint_dir', type=str, default='models/checkpoint',
                         help='Directory name to save the checkpoints')
-    parser.add_argument('--result_dir', type=str, default='results',
+    parser.add_argument('--result_dir', type=str, default='output',
                         help='Directory name to save the generated images')
     parser.add_argument('--log_dir', type=str, default='logs',
                         help='Directory name to save training logs')
-    parser.add_argument('--sample_dir', type=str, default='samples',
+    parser.add_argument('--sample_dir', type=str, default='output/samples',
                         help='Directory name to save the samples on training')
 
     return check_args(parser.parse_args())

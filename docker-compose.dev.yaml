@@ -17,3 +17,4 @@ services:
             - ./dataset:/workspace/dataset
             - ./logs:/workspace/logs
             - ./output:/workspace/output
+            - ./models:/workspace/models
