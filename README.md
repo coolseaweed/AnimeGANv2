@@ -89,21 +89,20 @@ docker-compose -f docker-compose.prod.yaml up -d
   
 ### 5. Train  
 ```bash
-CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset dataset/picture/Hayao --epoch 101 --init_epoch 1
+CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset <dataset dir> --epoch 101 --init_epoch 1
+ex)  python main.py --phase train --dataset dataset/picture/Hayao --epoch 101 --init_epoch 1
 
 # For light version:
-python main.py --phase train --dataset dataset/picture/Hayao --light --epoch 101 --init_epoch 1
+python main.py --phase train --dataset <dataset dir> --light --epoch 101 --init_epoch 1
 ```
 
 ### 6. Extract the weights  
 ```bash
 # extract only generator checkpoint
-python get_generator_from_ckpt.py --checkpoint_dir <ckpt_dir>
-ex) python get_generator_from_ckpt.py --checkpoint_dir models/checkpoint/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1
+python get_generator_from_ckpt.py --checkpoint_dir <ckpt_dir> --output_dir <output_dir>
 
 # convert generator checkpoint to pb file
-python ckpt2pb.py --ckpt_dir <checkpoint dir> --ckpt_prefix <checkpoint file
-prefix> 
+python ckpt2pb.py --ckpt_dir <ckpt dir> --ckpt_prefix <ckpt file prefix> --output_dir <output_dir>
 ex) python ckpt2pb.py --ckpt_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --ckpt_prefix model-101.ckpt 
 
 ```
@@ -111,20 +110,14 @@ ex) python ckpt2pb.py --ckpt_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300
 ### 7. Inference      
 ```bash
 # checkpoint test
-python test.py --checkpoint_dir <ckpt dir> --test_dir <src dir>
-ex) python test.py --checkpoint_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --test_dir dataset/picture/test/HR_photo
+python test.py --checkpoint_dir <ckpt dir> --test_dir <src dir> --output_dir <output dir>
 
 # pb test
 python tools/infer_pb.py --pb_path <pb directory> --img_path <src img> --out_path <out img>
 
-ex) python tools/infer_pb.py --pb_path models/pb/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1/model-101.ckpt --img_path dataset/picture/test/HR_photo/AE86.png --out_path output/picture/temp.png
-
 # convert video
-python video2anime.py  --video <video_path> --checkpoint_dir <checkpoint_dir>
+python video2anime.py  --video <video_path> --checkpoint_dir <ckpt_dir> --output_dir <output_dir>
 ```
-
-### 8. Convert video to anime   
-  > `python video2anime.py  --video video/input/お花見.mp4  --checkpoint_dir  checkpoint/generator_Paprika_weight`  
     
 ____  
 ## Results  
