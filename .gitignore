@@ -1,5 +1,14 @@
-# exclude everything in dataset folder
+# exclude files 
+__pycache__
 dataset/**/*.*
+models/**/*.*
+models/**/checkpoint
+logs/**/*.*
+output/**/*.*
 
-# include only .gitkeep files
+
+# include files
 !dataset/**/.gitkeep
+!models/**/.gitkeep
+!logs/.gitkeep
+!output/**/.gitkeep
