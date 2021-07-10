@@ -78,11 +78,13 @@ ___
   >  `python data_mean.py --dataset Hayao`  
   
 ### 5. Train  
-  >  `CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset Hayao --epoch 101 --init_epoch 1`  
-  >  For light version: 
-  >  
-  >  `python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661]  --light --epoch 101 --init_epoch 10`  
-  
+```bash
+CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset Hayao --epoch 101 --init_epoch 1
+
+# For light version:
+python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661]  --light --epoch 101 --init_epoch 10
+```
+
 ### 6. Extract the weights of the generator  
   >  `python get_generator_ckpt.py --checkpoint_dir  ../checkpoint/AnimeGAN_Hayao_lsgan_300_300_1_2_10_1  --style_name Hayao`  
 
