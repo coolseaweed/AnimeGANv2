@@ -1,7 +1,5 @@
-dataset
-vgg19_weight
-__pycache__
-result_baseline
-result
-checkpoint
-logs
+# exclude everything in dataset folder
+dataset/**/*.*
+
+# include only .gitkeep files
+!dataset/**/.gitkeep
