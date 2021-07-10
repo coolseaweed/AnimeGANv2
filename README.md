@@ -71,6 +71,16 @@ ___
 ### 2. Download Train/Val Photo dataset  
   > [Link](https://github.com/TachibanaYoshino/AnimeGAN/releases/tag/dataset-1)  
 
+### 3. env setup
+```bash
+# training
+docker-compose -f docker-compose.dev.yaml up -d
+
+# tf js
+docker-compose -f docker-compose.prod.yaml up -d
+
+```
+
 ### 3. Do edge_smooth  
   > `python edge_smooth.py --dataset Hayao --img_size 256`  
   
