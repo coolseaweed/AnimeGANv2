@@ -1,7 +1,7 @@
 import argparse
 from tools.utils import *
 import os
-from net import generator,generator_lite
+from net import generator, generator_lite
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -22,11 +22,12 @@ def save(saver, sess, checkpoint_dir, model_name):
     saver.save(sess, save_path, write_meta_graph=True)
     return  save_path
 
-def main(checkpoint_dir, style_name):
+def main(checkpoint_dir):
+    basename = os.path.basename(checkpoint_dir)
     if 'lite' in checkpoint_dir:
-        ckpt_dir = './checkpoint/' + 'generator_' + style_name + '_weight_lite'
+        ckpt_dir = os.path.join('models/generator',basename+'_lite')
     else:
-        ckpt_dir = './checkpoint/' + 'generator_' + style_name + '_weight'
+        ckpt_dir = os.path.join('models/generator',basename)
     check_folder(ckpt_dir)
 
     placeholder = tf.placeholder(tf.float32, [1, None, None, 3], name='generator_input')
@@ -54,7 +55,7 @@ def main(checkpoint_dir, style_name):
             print(" [*] Failed to find a checkpoint")
             return
 
-        info = save(saver, sess, ckpt_dir, style_name+'-'+counter)
+        info = save(saver, sess, ckpt_dir, 'model-'+counter)
 
         print(f'save over : {info} ')
 
@@ -63,4 +64,4 @@ def main(checkpoint_dir, style_name):
 if __name__ == '__main__':
     arg = parse_args()
     print(arg.checkpoint_dir)
-    main(arg.checkpoint_dir, arg.style_name)
+    main(arg.checkpoint_dir)

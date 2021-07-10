@@ -16,7 +16,7 @@ def parse_args():
                         help='Directory name to save the checkpoints')
     parser.add_argument('--test_dir', type=str, default='dataset/test/t',
                         help='Directory name of test photos')
-    parser.add_argument('--style_name', type=str, default='Shinkai/t',
+    parser.add_argument('--output_dir', type=str, default='output/picture',
                         help='what style you want to get')
     parser.add_argument('--if_adjust_brightness', type=bool, default=True,
                         help='adjust brightness by the real photo')
@@ -30,9 +30,10 @@ def stats_graph(graph):
     # params = tf.profiler.profile(graph, options=tf.profiler.ProfileOptionBuilder.trainable_variables_parameter())
     print('FLOPs: {}'.format(flops.total_float_ops))
 
-def test(checkpoint_dir, style_name, test_dir, if_adjust_brightness, img_size=[256,256]):
+def test(checkpoint_dir, output_dir, test_dir, if_adjust_brightness, img_size=[256,256]):
     # tf.reset_default_graph()
-    result_dir = 'result/'+style_name
+
+    result_dir = os.path.join(output_dir,os.path.basename(test_dir))
     check_folder(result_dir)
     test_files = glob('{}/*.*'.format(test_dir))
 
@@ -75,4 +76,4 @@ def test(checkpoint_dir, style_name, test_dir, if_adjust_brightness, img_size=[2
 if __name__ == '__main__':
     arg = parse_args()
     print(arg.checkpoint_dir)
-    test(arg.checkpoint_dir, arg.style_name, arg.test_dir, arg.if_adjust_brightness)
+    test(arg.checkpoint_dir, arg.output_dir, arg.test_dir, arg.if_adjust_brightness)
