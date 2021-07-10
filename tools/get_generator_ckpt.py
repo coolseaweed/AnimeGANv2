@@ -24,9 +24,9 @@ def save(saver, sess, checkpoint_dir, model_name):
 
 def main(checkpoint_dir, style_name):
     if 'lite' in checkpoint_dir:
-        ckpt_dir = '../checkpoint/' + 'generator_' + style_name + '_weight_lite'
+        ckpt_dir = './checkpoint/' + 'generator_' + style_name + '_weight_lite'
     else:
-        ckpt_dir = '../checkpoint/' + 'generator_' + style_name + '_weight'
+        ckpt_dir = './checkpoint/' + 'generator_' + style_name + '_weight'
     check_folder(ckpt_dir)
 
     placeholder = tf.placeholder(tf.float32, [1, None, None, 3], name='generator_input')
