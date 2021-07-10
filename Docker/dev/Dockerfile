@@ -30,7 +30,8 @@ RUN apt-get update && \
 		iftop \
 		net-tools \
 		iputils-ping \
-		libgl1-mesa-glx
+		libgl1-mesa-glx \
+		python3-tk
 
 
 # Install dependency

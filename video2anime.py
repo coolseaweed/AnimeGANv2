@@ -22,14 +22,24 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def parse_args():
     desc = "Tensorflow implementation of AnimeGANv2"
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument('--video', type=str, default='video/input/'+ '2.mp4',
-                        help='video file or number for webcam')
-    parser.add_argument('--checkpoint_dir', type=str, default='../checkpoint/generator_Paprika_weight',
-                        help='Directory name to save the checkpoints')
-    parser.add_argument('--output', type=str, default='video/output/' + 'Paprika',
-                        help='output path')
-    parser.add_argument('--output_format', type=str, default='MP4V',
-                        help='codec used in VideoWriter when saving video to file')
+    parser.add_argument(
+        '--video', type=str, 
+        help='video file or number for webcam')
+
+    parser.add_argument(
+        '--checkpoint_dir', type=str, 
+        help='Directory name to save the checkpoints')
+
+    parser.add_argument(
+        '--output', type=str, 
+        default='output/video',
+        help='output path')
+
+    parser.add_argument(
+        '--output_format', type=str, 
+        default='MP4V',
+        help='codec used in VideoWriter when saving video to file')
+        
     """
     output_format: xxx.mp4('MP4V'), xxx.mkv('FMP4'), xxx.flv('FLV1'), xxx.avi('XIVD')
     ps. ffmpeg -i xxx.mkv -c:v libx264 -strict -2 xxxx.mp4, this command can convert mkv to mp4, which has small size.
