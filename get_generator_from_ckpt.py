@@ -9,10 +9,13 @@ def parse_args():
     desc = "AnimeGANv2"
     parser = argparse.ArgumentParser(description=desc)
 
-    parser.add_argument('--checkpoint_dir', type=str, default='../checkpoint/' + 'AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1_lite',
-                        help='Directory name to save the checkpoints')
-    parser.add_argument('--style_name', type=str, default='Hayao',
-                        help='what style you want to get')
+    parser.add_argument(
+            '--checkpoint_dir', type=str, 
+            help='Directory name to save the checkpoints')
+    parser.add_argument(
+            '--output_dir', type=str, 
+            default='models/generator',
+            help='what style you want to get')
 
     return parser.parse_args()
 
@@ -22,12 +25,12 @@ def save(saver, sess, checkpoint_dir, model_name):
     saver.save(sess, save_path, write_meta_graph=True)
     return  save_path
 
-def main(checkpoint_dir):
+def main(checkpoint_dir,output_dir):
     basename = os.path.basename(checkpoint_dir)
     if 'lite' in checkpoint_dir:
-        ckpt_dir = os.path.join('models/generator',basename+'_lite')
+        ckpt_dir = os.path.join(output_dir,basename+'_lite')
     else:
-        ckpt_dir = os.path.join('models/generator',basename)
+        ckpt_dir = os.path.join(output_dir,basename)
     check_folder(ckpt_dir)
 
     placeholder = tf.placeholder(tf.float32, [1, None, None, 3], name='generator_input')
@@ -64,4 +67,4 @@ def main(checkpoint_dir):
 if __name__ == '__main__':
     arg = parse_args()
     print(arg.checkpoint_dir)
-    main(arg.checkpoint_dir)
+    main(arg.checkpoint_dir, arg.output_dir)

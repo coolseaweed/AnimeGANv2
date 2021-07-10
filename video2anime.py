@@ -31,7 +31,7 @@ def parse_args():
         help='Directory name to save the checkpoints')
 
     parser.add_argument(
-        '--output', type=str, 
+        '--output_dir', type=str, 
         default='output/video',
         help='output path')
 
