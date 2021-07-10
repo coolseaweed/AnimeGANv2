@@ -107,7 +107,11 @@ python ckpt2pb.py --ckpt_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2
 
 ### 7. Inference      
 ```
+# checkpoint test
 python test.py --checkpoint_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --test_dir dataset/picture/test/HR_photo
+
+# pb test
+python tools/infer_pb.py --pb_path models/pb/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1/model-101.ckpt --img_path dataset/picture/test/HR_photo/AE86.png --out_path output/picture/temp.png
 ```
 
 ### 8. Convert video to anime   
