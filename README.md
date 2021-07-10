@@ -101,7 +101,9 @@ python get_generator_from_ckpt.py --checkpoint_dir models/checkpoint/AnimeGANv2_
 ```
 
 ### 7. Inference      
-  > `python test.py --checkpoint_dir  checkpoint/generator_Hayao_weight  --test_dir dataset/test/HR_photo --style_name Hayao/HR_photo`  
+```
+python test.py --checkpoint_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --test_dir dataset/picture/test/HR_photo
+```
   
 ### 8. Convert video to anime   
   > `python video2anime.py  --video video/input/お花見.mp4  --checkpoint_dir  checkpoint/generator_Paprika_weight`  
