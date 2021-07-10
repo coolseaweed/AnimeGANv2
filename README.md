@@ -89,10 +89,10 @@ docker-compose -f docker-compose.prod.yaml up -d
   
 ### 5. Train  
 ```bash
-CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset Hayao --epoch 101 --init_epoch 1
+CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset dataset/picture/Hayao --epoch 101 --init_epoch 1
 
 # For light version:
-python main.py --phase train --dataset Hayao --data_mean [13.1360,-8.6698,-4.4661]  --light --epoch 101 --init_epoch 10
+python main.py --phase train --dataset dataset/picture/Hayao --data_mean --light --epoch 101 --init_epoch 1
 ```
 
 ### 6. Extract the weights of the generator  
