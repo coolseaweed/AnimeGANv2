@@ -95,16 +95,21 @@ CUDA_VISIBLE_DEVICES="0" python main.py --phase train --dataset dataset/picture/
 python main.py --phase train --dataset dataset/picture/Hayao --data_mean --light --epoch 101 --init_epoch 1
 ```
 
-### 6. Extract the weights of the generator  
+### 6. Extract the weights  
 ```
+# extract only generator checkpoint
 python get_generator_from_ckpt.py --checkpoint_dir models/checkpoint/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1
+
+# convert generator checkpoint to pb file
+python ckpt2pb.py --ckpt_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --ckpt_prefix model-101.ckpt 
+
 ```
 
 ### 7. Inference      
 ```
 python test.py --checkpoint_dir models/generator/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1 --test_dir dataset/picture/test/HR_photo
 ```
-  
+
 ### 8. Convert video to anime   
   > `python video2anime.py  --video video/input/お花見.mp4  --checkpoint_dir  checkpoint/generator_Paprika_weight`  
     
