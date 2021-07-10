@@ -96,7 +96,9 @@ python main.py --phase train --dataset dataset/picture/Hayao --data_mean --light
 ```
 
 ### 6. Extract the weights of the generator  
-  >  `python get_generator_ckpt.py --checkpoint_dir  ../checkpoint/AnimeGAN_Hayao_lsgan_300_300_1_2_10_1  --style_name Hayao`  
+```
+python get_generator_from_ckpt.py --checkpoint_dir models/checkpoint/AnimeGANv2_Hayao_lsgan_300_300_1_2_10_1
+```
 
 ### 7. Inference      
   > `python test.py --checkpoint_dir  checkpoint/generator_Hayao_weight  --test_dir dataset/test/HR_photo --style_name Hayao/HR_photo`  
