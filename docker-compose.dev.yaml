@@ -1,7 +1,7 @@
 version: '2.3'
 services:
-    run:
-        build: ./Docker
+    dev:
+        build: ./Docker_dev
         runtime: nvidia
         ipc: host
         tty: true
