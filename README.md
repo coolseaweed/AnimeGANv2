@@ -1,5 +1,8 @@
 # AnimeGANv2   
 
+## Paper
+[link](https://link.springer.com/chapter/10.1007/978-981-15-5577-0_18)
+
 ## Requirements  
 - python 3.6  
 - tensorflow-gpu 
